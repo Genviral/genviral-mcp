@@ -1,0 +1,24 @@
+{
+  "name": "genviral",
+  "description": "Connect the remote Genviral MCP so agents can create, schedule, publish, and analyze social content.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Genviral",
+    "email": "fekri@mail.genviral.io"
+  },
+  "homepage": "https://www.genviral.io",
+  "repository": "https://github.com/Genviral/genviral-mcp",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "social",
+    "cursor",
+    "genviral",
+    "grok",
+    "scheduling",
+    "tiktok",
+    "instagram",
+    "youtube"
+  ],
+  "logo": "assets/logo.png"
+}
