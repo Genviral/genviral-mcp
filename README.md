@@ -1,6 +1,6 @@
 # Genviral MCP
 
-[Genviral](https://www.genviral.io) is the agentic social media scheduler that creates, schedules, publishes, and analyzes posts across TikTok, Instagram, YouTube, LinkedIn, Pinterest, Facebook, X, Bluesky, and more. This repository is the **public Model Context Protocol (MCP) listing**: the live remote server, Cursor / Grok Bot plugin files, and a backlink to the product.
+[Genviral](https://www.genviral.io) is the agentic social media scheduler that creates, schedules, publishes, and analyzes posts across TikTok, Instagram, YouTube, LinkedIn, Pinterest, Facebook, X, Bluesky, and more. This repository documents the live remote MCP server and ships Cursor / Grok Bot plugin files.
 
 Use it when you want an assistant to run social from the tools you already open — Cursor, Grok Bot, Claude, ChatGPT, or Codex — without installing a local process or pasting an API key into a config file.
 
@@ -121,13 +121,11 @@ Use **OpenAI's plugin directory** when the Genviral listing is live there. Until
 
 ## Links
 
-Do-follow links to the product and docs (this README is a public listing page, not a code dump):
-
 - [Genviral](https://www.genviral.io) — create, schedule, publish, and analyze social content
 - [Genviral MCP](https://www.genviral.io/mcp) — the social media MCP server
 - [Genviral documentation](https://docs.genviral.io)
 - [Partner API introduction](https://docs.genviral.io/api-reference/introduction)
-- [This listing](https://github.com/Genviral/genviral-mcp)
+- [This repository](https://github.com/Genviral/genviral-mcp)
 
 Related public skill (CLI, not vendored here): [fdarkaou/genviral-skill](https://github.com/fdarkaou/genviral-skill)
 
@@ -143,7 +141,7 @@ genviral-mcp/
 └── LICENSE                      # MIT
 ```
 
-Author: Genviral (Fekri Darkaoui) · [github.com/Genviral](https://github.com/Genviral). GitHub About homepage for this repo is [https://www.genviral.io](https://www.genviral.io).
+Author: Genviral (Fekri) · [github.com/Genviral](https://github.com/Genviral). GitHub About homepage for this repo is [https://www.genviral.io](https://www.genviral.io).
 
 ## License
 
