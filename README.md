@@ -1,25 +1,68 @@
 # Genviral MCP
 
-Official public listing for the **Genviral remote MCP**. Point Cursor, Grok Bot, Claude, or Codex at the hosted connector to create, schedule, publish, and analyze social content across TikTok, Instagram, YouTube, LinkedIn, Pinterest, Facebook, X, and Bluesky, including AI image, video, and slideshow generation.
+[Genviral](https://www.genviral.io) is the agentic social media scheduler that creates, schedules, publishes, and analyzes posts across TikTok, Instagram, YouTube, LinkedIn, Pinterest, Facebook, X, Bluesky, and more. This repository is the **public Model Context Protocol (MCP) listing**: the live remote server, Cursor / Grok Bot plugin files, and a backlink to the product.
 
-This repository is a **thin public wrapper**. It ships Cursor plugin manifests, a skill, the official logo, and this README. It does **not** contain Genviral product source, backend code, internal docs, or secrets.
+Use it when you want an assistant to run social from the tools you already open — Cursor, Grok Bot, Claude, ChatGPT, or Codex — without installing a local process or pasting an API key into a config file.
 
-- Product: [https://www.genviral.io](https://www.genviral.io)
-- Docs: [https://docs.genviral.io/api-reference/introduction](https://docs.genviral.io/api-reference/introduction)
-- Repository: [https://github.com/Genviral/genviral-mcp](https://github.com/Genviral/genviral-mcp)
-- Author: Genviral (Fekri Darkaoui) · [github.com/Genviral](https://github.com/Genviral)
+**Start here:** [Genviral](https://www.genviral.io) · [Genviral MCP](https://www.genviral.io/mcp) · [Docs](https://docs.genviral.io) · [Partner API](https://docs.genviral.io/api-reference/introduction)
 
-## Remote MCP
+## What it is
 
-| | |
-| --- | --- |
-| URL | `https://mcp.genviral.io/mcp` |
-| Transport | Streamable HTTP |
-| Auth | OAuth 2 with PKCE |
+Genviral MCP is a **remote Streamable HTTP** server. You add one URL to your client, sign in with **OAuth**, and the assistant can:
 
-Clients should connect with **only that URL**. Do not add an API-key variable or `Authorization` header unless the live MCP requires a bearer token (the production connector advertises OAuth, not a static key).
+- **Create** captions, drafts, and AI images, videos, and slideshows
+- **Schedule** posts onto a content calendar
+- **Publish** to connected social accounts
+- **Analyze** what already ran, then plan the next batch from real performance
 
-Use the **full connector**. Do not use the Anthropic-filtered URL `https://mcp.genviral.io/anthropic/mcp`.
+This GitHub repo is a thin public wrapper (manifests, skill, logo, MIT license). It does **not** contain Genviral product source, backend code, internal docs, or secrets. The product lives at [www.genviral.io](https://www.genviral.io). The protocol page is [www.genviral.io/mcp](https://www.genviral.io/mcp).
+
+## Who it is for
+
+- Founders and marketers who want a week of posts from a sentence, not a dashboard tour
+- Teams that already work in Cursor, Claude, ChatGPT, or Codex and need a real social backend
+- Agencies that bind each connection to one [Genviral](https://www.genviral.io) workspace
+- Developers who want the assistant path (MCP) next to the [Partner API](https://docs.genviral.io/api-reference/introduction) and CLI
+
+## What you can do
+
+Ask for work in plain language. The assistant calls the live MCP tools; [Genviral](https://www.genviral.io) executes against your connected accounts.
+
+- Draft and queue TikTok slideshows, Instagram Reels, YouTube Shorts, LinkedIn posts, Pinterest pins, Facebook posts, X posts, and Bluesky posts
+- Generate AI images, videos, and slideshows in Genviral Studio, then attach them to a post
+- Read the calendar, move a scheduled batch, or hold a draft for review
+- Pull analytics and trend context before the next run
+- Keep publishing behind an explicit publish-or-schedule decision (the `posts:publish` scope is separate from draft and generate)
+
+Examples people actually type:
+
+- “What did I post last week, and which one did best?”
+- “Generate three TikTok slideshows about morning routines and schedule them for this week.”
+- “Draft a LinkedIn post from this changelog, but don't publish it.”
+- “Make a 9:16 video from this image and queue it as an Instagram Reel.”
+
+Read the longer product walkthrough on [The social media MCP server](https://www.genviral.io/mcp).
+
+## Live endpoints
+
+Two production URLs. Both are remote Streamable HTTP. Neither belongs in this repo as source — they are hosted on `mcp.genviral.io`.
+
+| Connector | URL | Use |
+| --- | --- | --- |
+| **Full MCP** | [https://mcp.genviral.io/mcp](https://mcp.genviral.io/mcp) | Cursor, Grok Bot, and any client that should see the complete tool set (including AI media generation) |
+| **Anthropic-filtered MCP** | [https://mcp.genviral.io/anthropic/mcp](https://mcp.genviral.io/anthropic/mcp) | Claude custom connectors and the Anthropic directory |
+
+Discovery document (full server): [https://www.genviral.io/.well-known/mcp/server-card.json](https://www.genviral.io/.well-known/mcp/server-card.json)
+
+This repo's Cursor plugin (`mcp.json`) points at the **full** URL.
+
+## Auth
+
+**OAuth 2 with PKCE.** The client opens a Genviral consent screen. You pick a workspace and grant scopes. There is **no API key in this repository**, no `${API_KEY}` plugin variable, and no bearer header to paste.
+
+Scopes (full connector): `context:read`, `content:write`, `posts:publish`, `media:generate`.
+
+You can create a free account at [www.genviral.io](https://www.genviral.io), connect social accounts in the dashboard, then approve only the scopes that client should have. Revoke a connection later without rotating a shared secret.
 
 ### Cursor OAuth redirect URLs
 
@@ -28,111 +71,79 @@ If the MCP allowlist needs Cursor's callbacks, register both:
 - `https://www.cursor.com/agents/mcp/oauth/callback`
 - `http://localhost:8787/callback`
 
-Claude and Codex use their own OAuth callback handling. Add those client redirects on the MCP side only if that client cannot complete login.
-
-## Connect
+## Install by host
 
 ### Cursor and Grok Bot
 
-This repo is a Cursor Plugin (`name`: `genviral`). After it is listed on the [Cursor Marketplace](https://cursor.com/marketplace), install it from **Customize** and complete OAuth when prompted.
+Plugin files in **this repo** (`name`: `genviral`):
 
-The plugin MCP config is `mcp.json`:
+- `.cursor-plugin/plugin.json`
+- `mcp.json` → `https://mcp.genviral.io/mcp`
+- `skills/genviral/SKILL.md`
+- `assets/logo.png`
 
-```json
-{
-  "mcpServers": {
-    "genviral": {
-      "url": "https://mcp.genviral.io/mcp"
-    }
-  }
-}
+After the listing is on the [Cursor Marketplace](https://cursor.com/marketplace), install from **Customize** and finish OAuth. Submit the public repo at [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish) and [cursor.directory](https://cursor.directory).
+
+#### Test locally in Cursor
+
+```bash
+git clone https://github.com/Genviral/genviral-mcp.git
+mkdir -p ~/.cursor/plugins/local
+ln -s "$(pwd)/genviral-mcp" ~/.cursor/plugins/local/genviral
 ```
 
-#### Test the plugin locally
+The local folder name is `genviral` (plugin `name`), not `genviral-mcp` (this repo). Reload the window (**Developer: Reload Window**), open **Customize**, confirm the skill and MCP server, then complete OAuth.
 
-1. Clone this repo:
-
-   ```bash
-   git clone https://github.com/Genviral/genviral-mcp.git
-   ```
-
-2. Link or copy it into the local plugin folder (the folder name is `genviral`, not the repo name):
-
-   ```bash
-   mkdir -p ~/.cursor/plugins/local
-   ln -s "$(pwd)/genviral-mcp" ~/.cursor/plugins/local/genviral
-   ```
-
-3. Restart Cursor or run **Developer: Reload Window**.
-4. Open **Customize** and confirm the Genviral skill and MCP server.
-5. Complete OAuth, then ask the agent to list connected social accounts.
-
-On Teams and Enterprise, local plugin imports may need **Allow Local Plugin Imports** enabled.
+On Teams and Enterprise, local imports may need **Allow Local Plugin Imports**.
 
 ### Claude
 
-Add the same hosted URL as a remote HTTP MCP (Claude requires an explicit transport type):
+Claude custom connectors and the Anthropic directory use the **Anthropic-filtered** URL:
+
+```text
+https://mcp.genviral.io/anthropic/mcp
+```
+
+In Claude apps: **Settings → Connectors → Add custom connector**, paste that URL, connect, then approve scopes.
+
+Claude Code can add a remote HTTP server the same way (explicit `type` / `--transport http`). Prefer the Anthropic URL for Claude surfaces:
 
 ```bash
-claude mcp add --transport http genviral https://mcp.genviral.io/mcp
+claude mcp add --transport http genviral https://mcp.genviral.io/anthropic/mcp
 ```
 
-Equivalent JSON for `.mcp.json` or `~/.claude.json`:
+### ChatGPT and Codex
 
-```json
-{
-  "mcpServers": {
-    "genviral": {
-      "type": "http",
-      "url": "https://mcp.genviral.io/mcp"
-    }
-  }
-}
-```
+Use **OpenAI's plugin directory** when the Genviral listing is live there. Until then, do not invent a second host. The production MCP remains:
 
-Then complete the OAuth prompt. Do not switch to `https://mcp.genviral.io/anthropic/mcp`.
+- Full: [https://mcp.genviral.io/mcp](https://mcp.genviral.io/mcp)
+- Product page: [https://www.genviral.io/mcp](https://www.genviral.io/mcp)
 
-### Codex
+## Links
 
-Add the Streamable HTTP URL (no bearer env var):
+Do-follow links to the product and docs (this README is a public listing page, not a code dump):
 
-```bash
-codex mcp add genviral --url https://mcp.genviral.io/mcp
-```
+- [Genviral](https://www.genviral.io) — create, schedule, publish, and analyze social content
+- [Genviral MCP](https://www.genviral.io/mcp) — the social media MCP server
+- [Genviral documentation](https://docs.genviral.io)
+- [Partner API introduction](https://docs.genviral.io/api-reference/introduction)
+- [This listing](https://github.com/Genviral/genviral-mcp)
 
-Or in `~/.codex/config.toml`:
+Related public skill (CLI, not vendored here): [fdarkaou/genviral-skill](https://github.com/fdarkaou/genviral-skill)
 
-```toml
-[mcp_servers.genviral]
-url = "https://mcp.genviral.io/mcp"
-```
-
-If the client asks you to log in, run `codex mcp login genviral` and finish OAuth in the browser.
-
-## What the skill does
-
-`skills/genviral/SKILL.md` tells the agent when to use Genviral and to call the **live MCP tools** after OAuth. It does not vendor the Partner API CLI or private app source.
-
-A separate public CLI skill lives at [fdarkaou/genviral-skill](https://github.com/fdarkaou/genviral-skill). That repo is optional and is not bundled here.
-
-## Submit
-
-After this listing is on `main`:
-
-1. **Cursor Marketplace** — submit the public GitHub URL at [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
-2. **cursor.directory** — submit [https://github.com/Genviral/genviral-mcp](https://github.com/Genviral/genviral-mcp) from [cursor.directory](https://cursor.directory).
-
-## Layout
+## Repo layout
 
 ```text
 genviral-mcp/
-├── .cursor-plugin/plugin.json   # Cursor plugin manifest (name: genviral)
-├── mcp.json                     # Remote MCP URL for Cursor
-├── skills/genviral/SKILL.md     # When and how to use the MCP
+├── .cursor-plugin/plugin.json   # Cursor plugin (name: genviral)
+├── mcp.json                     # Full remote MCP for Cursor / Grok Bot
+├── skills/genviral/SKILL.md     # When to use the live MCP tools
 ├── assets/logo.png              # Official Genviral mark
 ├── README.md
 └── LICENSE                      # MIT
 ```
+
+Author: Genviral (Fekri Darkaoui) · [github.com/Genviral](https://github.com/Genviral). GitHub About homepage for this repo is [https://www.genviral.io](https://www.genviral.io).
 
 ## License
 
