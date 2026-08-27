@@ -1,5 +1,6 @@
 {
   "name": "genviral",
+  "displayName": "Genviral",
   "description": "Connect the remote Genviral MCP so agents can create, schedule, publish, and analyze social content.",
   "version": "1.0.0",
   "author": {
