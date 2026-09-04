@@ -54,7 +54,8 @@ Two production URLs. Both are remote Streamable HTTP. Neither belongs in this re
 
 Discovery document (full server): [https://www.genviral.io/.well-known/mcp/server-card.json](https://www.genviral.io/.well-known/mcp/server-card.json)
 
-This repo's Cursor plugin (`mcp.json`) points at the **full** URL.
+This repo's Cursor plugin (`mcp.json`) points at the **full** URL. The Claude
+plugin (`.mcp.json`) points at the **Anthropic-filtered** URL.
 
 ## Auth
 
@@ -112,6 +113,26 @@ Claude Code can add a remote HTTP server the same way (explicit `type` / `--tran
 claude mcp add --transport http genviral https://mcp.genviral.io/anthropic/mcp
 ```
 
+#### Claude Code and Cowork plugin
+
+This repository also ships a Claude plugin:
+
+- `.claude-plugin/plugin.json` contains the marketplace metadata
+- `.mcp.json` connects the Anthropic-filtered remote MCP server
+- `skills/genviral/SKILL.md` teaches Claude when and how to use Genviral
+
+The plugin uses OAuth and does not ask users to paste an API key. Because it
+connects an external service with publishing and generation capabilities, it is
+disabled by default until the user explicitly enables it.
+
+Test the public repository locally before the community listing is approved:
+
+```bash
+git clone https://github.com/Genviral/genviral-mcp.git
+claude plugin validate ./genviral-mcp --strict
+claude --plugin-dir ./genviral-mcp
+```
+
 ### ChatGPT and Codex
 
 Use **OpenAI's plugin directory** when the Genviral listing is live there. Until then, do not invent a second host. The production MCP remains:
@@ -133,10 +154,13 @@ Related public skill (CLI, not vendored here): [fdarkaou/genviral-skill](https:/
 
 ```text
 genviral-mcp/
+├── .claude-plugin/plugin.json   # Claude Code / Cowork plugin metadata
+├── .mcp.json                    # Anthropic-filtered remote MCP for Claude
 ├── .cursor-plugin/plugin.json   # Cursor plugin (name: genviral)
 ├── mcp.json                     # Full remote MCP for Cursor / Grok Bot
 ├── skills/genviral/SKILL.md     # When to use the live MCP tools
 ├── assets/logo.png              # Official Genviral mark
+├── tests/validate-claude-plugin.mjs
 ├── README.md
 └── LICENSE                      # MIT
 ```

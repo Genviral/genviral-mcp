@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "genviral",
+  "displayName": "Genviral",
+  "version": "1.0.0",
+  "description": "Create, schedule, publish, and analyze social content with Genviral through its OAuth-protected remote MCP server.",
+  "author": {
+    "name": "Genviral",
+    "email": "fekri@mail.genviral.io",
+    "url": "https://www.genviral.io"
+  },
+  "homepage": "https://www.genviral.io/mcp",
+  "repository": "https://github.com/Genviral/genviral-mcp",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "social-media",
+    "content-creation",
+    "scheduling",
+    "analytics",
+    "tiktok",
+    "instagram",
+    "youtube"
+  ],
+  "defaultEnabled": false
+}
